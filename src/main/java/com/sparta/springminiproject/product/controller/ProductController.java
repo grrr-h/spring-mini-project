@@ -16,7 +16,7 @@ public class ProductController {
     }
 
     //상품 등록
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<?> create(@RequestBody ProductRequestDto productRequestDto) {
         return  ResponseEntity.ok(productService.createProduct(productRequestDto));
     }

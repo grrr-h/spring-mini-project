@@ -22,53 +22,33 @@ public class ProductService {
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         Product product = new Product(productRequestDto);
         Product saveProduct = productRepository.save(product);
-        return ProductResponseDto.builder()
-                .prodName(saveProduct.getProdName())
-                .prodPrice(saveProduct.getProdPrice())
-                .build();
+        return ProductResponseDto.fromEntity(saveProduct);
     }
 
     public ProductResponseDto getProduct(Long prodId) {
         Product product = findProductById(prodId);
-        return ProductResponseDto.builder()
-                .prodName(product.getProdName())
-                .prodPrice(product.getProdPrice())
-                .build();
+        return ProductResponseDto.fromEntity(product);
     }
 
 
     public List<ProductResponseDto> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(p -> ProductResponseDto.builder()
-                        .prodName(p.getProdName())
-                        .prodPrice(p.getProdPrice())
-                        .prodId(p.getProdId())
-                        .stock(p.getStock()).build()).toList();
+                .map(p -> ProductResponseDto.fromEntity(p)).toList();
+        //  .map(ProductResponseDto::fromEntity)
     }
 
     @Transactional
     public ProductResponseDto updateProduct(Long prodId, ProductRequestDto productRequestDto) {
         Product product = findProductById(prodId);
+        Product updateProduct = product.updateProduct(productRequestDto);
+        return ProductResponseDto.fromEntity(updateProduct);
 
-        if(product != null) {
-            Product updateProduct = product.updateProduct(productRequestDto);
-            return ProductResponseDto.builder()
-                    .prodName(updateProduct.getProdName())
-                    .prodPrice(updateProduct.getProdPrice())
-                    .stock(updateProduct.getStock())
-                    .build();
-        } else {
-            throw new IllegalArgumentException("해당 상품은 존재하지 않습니다.");
-        }
     }
 
     public void deleteProduct(Long prodId) {
         Product product = findProductById(prodId);
-        if(product != null) {
-            productRepository.delete(product);
-        } else {
-            throw new IllegalArgumentException("해당 상품은 존재하지 않습니다.");
-        }
+        productRepository.delete(product);
+
     }
 
 

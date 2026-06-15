@@ -24,28 +24,19 @@ public class OrderService {
     public OrderResponseDto createOrder(Long prodId) {
         Product product = findProdById(prodId);
         Order order = orderRepository.save(new Order(product));
+        product.decreaseStock();
 
-        return OrderResponseDto.builder()
-                .orderId(order.getOrderId())
-                .prodName(order.getProduct().getProdName())
-                .build();
+        return OrderResponseDto.fromEntity(order);
     }
 
     public OrderResponseDto getOrder(Long orderId) {
         Order order = findOrderById(orderId);
-
-        return OrderResponseDto.builder()
-                .orderId(order.getOrderId())
-                .prodName(order.getProduct().getProdName())
-                .build();
+        return OrderResponseDto.fromEntity(order);
     }
 
     public List<OrderResponseDto> getOrders() {
         return orderRepository.findAll().stream()
-                .map(o -> OrderResponseDto.builder()
-                        .orderId(o.getOrderId())
-                        .prodName(o.getProduct().getProdName())
-                        .build()).toList();
+                .map(o -> OrderResponseDto.fromEntity(o)).toList();
     }
 
 

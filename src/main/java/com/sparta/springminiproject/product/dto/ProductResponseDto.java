@@ -1,5 +1,6 @@
 package com.sparta.springminiproject.product.dto;
 
+import com.sparta.springminiproject.product.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,5 +20,12 @@ public class ProductResponseDto {
         this.stock = stock;
     }
 
-
+    public static ProductResponseDto fromEntity(Product product) {
+        return ProductResponseDto.builder()
+                .prodId(product.getProdId())
+                .prodName(product.getProdName())
+                .prodPrice(product.getProdPrice())
+                .stock(product.getStock())
+                .build();
+    }
 }

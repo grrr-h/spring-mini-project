@@ -34,4 +34,11 @@ public class Product {
         return this;
     }
 
+    public void decreaseStock() {
+        if(this.stock <= 0) {
+            throw new IllegalStateException("재고가 없습니다.");
+        }
+        this.stock -= 1;
+    }
+
 }
