@@ -36,7 +36,7 @@ public class OrderService {
 
     public List<OrderResponseDto> getOrders() {
         return orderRepository.findAll().stream()
-                .map(o -> OrderResponseDto.fromEntity(o)).toList();
+                .map(OrderResponseDto::fromEntity).toList();
     }
 
 

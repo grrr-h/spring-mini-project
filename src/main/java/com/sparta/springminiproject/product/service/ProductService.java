@@ -33,8 +33,7 @@ public class ProductService {
 
     public List<ProductResponseDto> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(p -> ProductResponseDto.fromEntity(p)).toList();
-        //  .map(ProductResponseDto::fromEntity)
+                .map(ProductResponseDto::fromEntity).toList();
     }
 
     @Transactional
