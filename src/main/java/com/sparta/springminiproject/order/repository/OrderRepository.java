@@ -11,7 +11,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @EntityGraph(attributePaths = "product")
-    List<Order> findAll();
+    List<Order> findAllByOrderByOrderIdAsc();
 
 
     /*
@@ -19,7 +19,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
            select o
            from Order o
            join fetch o.product
-""")
+    """)
     List<Order> findAllWithProduct();
 
      */

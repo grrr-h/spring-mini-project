@@ -35,7 +35,7 @@ public class OrderService {
     }
 
     public List<OrderResponseDto> getOrders() {
-        return orderRepository.findAll().stream()
+        return orderRepository.findAllByOrderByOrderIdAsc().stream()
                 .map(OrderResponseDto::fromEntity).toList();
     }
 

@@ -19,6 +19,7 @@ public class Product {
     private String prodName;
     private Long prodPrice;
     private int stock;
+    private boolean deleted = false;
 
 
     public Product(ProductRequestDto productRequestDto) {
@@ -39,6 +40,10 @@ public class Product {
             throw new IllegalStateException("재고가 없습니다.");
         }
         this.stock -= 1;
+    }
+
+    public void deleteProduct() {
+        this.deleted = true;
     }
 
 }
